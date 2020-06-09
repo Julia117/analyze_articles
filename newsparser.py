@@ -44,7 +44,8 @@ def get_text(item):
     texts_list = []
     for string in texts:
         texts_list.append(string.text)
-    return "".join(texts_list)
+    result = "".join(texts_list)
+    return result.replace("\xa0", " ")
 
 import datetime
 
