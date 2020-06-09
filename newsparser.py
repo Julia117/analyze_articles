@@ -6,7 +6,7 @@ import feedparser
 
 rss_meduza = "https://meduza.io/rss/all"
 rss_vedomosti = "https://www.vedomosti.ru/rss/news"
-rss_lenta = "https://lenta.ru/rss"
+rss_lenta = "https://www.kommersant.ru/RSS/news.xml"
 
 feed_meduza = feedparser.parse(rss_meduza)
 feed_vedomosti = feedparser.parse(rss_vedomosti)

@@ -5,8 +5,6 @@
 
 
 import wget
-import nbimporter
-import operator
 import numpy as np
 
 
