@@ -224,11 +224,15 @@ def vectors_similarity(v1, v2):
 
 def compare_pairs(list1, list2):
     similar_articles = []
+    i = 0
     for vec1 in list1:
+        j = 0
         for vec2 in list2:
-            if (vectors_similarity(vec1, vec2) > 0.91):
-                similar_articles.append([list1, list2])
-
+            if vectors_similarity(vec1, vec2) > 0.91:
+                similar_articles.append([i, j])
+            j += 1
+        i += 1
+    print(i, j)
     return similar_articles
 
 ### Compare articles
