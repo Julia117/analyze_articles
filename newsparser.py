@@ -207,15 +207,13 @@ def add_tags(text='Текст нужно передать функции в ви
         print('\nLoading the model...', file=sys.stderr)
     model = Model.load(modelfile)
     process_pipeline = Pipeline(model, 'tokenize', Pipeline.DEFAULT, Pipeline.DEFAULT, 'conllu')
+    output = []
+    # print('Processing input...', file=sys.stderr)
+    # for line in text:
+    output = process(process_pipeline, text=text)
 
-
-    #print('Processing input...', file=sys.stderr)
-    for line in text:
-        output = process(process_pipeline, text=line)
-        #print(' '.join(output))
-        #print(line)
-        #print(text)
-        # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
+    # print(' '.join(output))
+    # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
     return output
 
 def get_result_vector(tagged_article):
