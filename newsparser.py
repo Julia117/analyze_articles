@@ -55,14 +55,23 @@ def get_todays_articles(feed):
 
 
 for item in get_todays_articles(feed_meduza):
-    #if is_news(item):
-        meduza_articles.append(get_text(item))
+    meduza_articles.append(get_text_old(item))
 
 for item in get_todays_articles(feed_vedomosti):
-    vedomosti_articles.append(get_text(item))
+    vedomosti_articles.append(get_text_old(item))
 
 for item in get_todays_articles(feed_lenta):
-    lenta_articles.append(get_text(item))
+    lenta_articles.append(get_text_old(item))
+
+from newspaper import Article
+
+
+def get_text_old(item):
+    url = item['link']
+    article = Article(url)
+    article.download()
+    article.parse()
+    return article.text
 
 
 
