@@ -161,7 +161,7 @@ def clean_lemma(lemma, pos, lowercase=True):
             out_lemma = ''.join(out_lemma[1:])
         if out_lemma.endswith('«') or out_lemma.endswith('»'):
             out_lemma = ''.join(out_lemma[:-1])
-        if out_lemma.endswith('!') or out_lemma.endswith('?') or out_lemma.endswith(',')                 or out_lemma.endswith('.'):
+        if out_lemma.endswith('!') or out_lemma.endswith('?') or out_lemma.endswith(',') or out_lemma.endswith('.'):
             out_lemma = ''.join(out_lemma[:-1])
     return out_lemma
 
