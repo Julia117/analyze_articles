@@ -242,7 +242,16 @@ def compare_pairs(list1, list2):
     print(i, j)
     return similar_articles
 
-### Compare articles
-meduza_tagged = [add_tags(text = [text]) for text in meduza_articles]
-vedomosti_tagged = [add_tags(text = [text]) for text in vedomosti_articles]
-lenta_tagged = [add_tags(text = [text]) for text in lenta_articles]
+
+# Compare articles
+
+meduza_tagged = [add_tags(text=text) for text in meduza_articles]
+vedomosti_tagged = [add_tags(text=text) for text in vedomosti_articles]
+lenta_tagged = [add_tags(text=text) for text in lenta_articles]
+
+meduza_vectors = [get_result_vector(article) for article in meduza_tagged]
+vedomosti_vectors = [get_result_vector(article) for article in vedomosti_tagged]
+
+print(vectors_similarity(get_result_vector(meduza_tagged[1]), get_result_vector(vedomosti_tagged[1])))
+
+sim_mv = compare_pairs(meduza_tagged, vedomosti_tagged)
