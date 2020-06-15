@@ -17,7 +17,7 @@ vedomosti_articles = []
 lenta_articles = []
 
 
-#functions
+# functions
 
 def is_news(item):
     if "news" in item['link']:
@@ -25,7 +25,9 @@ def is_news(item):
     else:
         return False
 
+
 from newspaper import Article
+
 
 def get_text_old(item):
     url = item['link']
@@ -34,8 +36,11 @@ def get_text_old(item):
     article.parse()
     return article.text
 
+
 import requests
 from bs4 import BeautifulSoup
+
+
 def get_text(item):
     url = item['link']
     page = requests.get(url)
@@ -47,9 +52,12 @@ def get_text(item):
     result = "".join(texts_list)
     return result.replace("\xa0", " ")
 
+
 import datetime
 
 now = datetime.datetime.now()
+
+
 def get_todays_articles(feed):
     return [item for item in feed['items'] if item.published[0:16] == now.strftime("%a, %d %b %Y")]
 
@@ -74,18 +82,56 @@ def get_text_old(item):
     return article.text
 
 
+import requests
+from bs4 import BeautifulSoup
+
+
+def get_text(item):
+    url = item['link']
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    texts = soup.find_all('p')
+    texts_list = []
+    for string in texts:
+        texts_list.append(string.text)
+    result = "".join(texts_list)
+    return result.replace("\xa0", " ")
 
 
 # Preprocess articles
+
 import wget
 import numpy as np
 
 import gensim.downloader as api
+
 # Get information about the model or dataset
 api.info('word2vec-ruscorpora-300')
 
 # Download
 w2v_model = api.load("word2vec-ruscorpora-300")
+
+
+def clean_token(token, misc):
+    """
+    :param token:
+    :param misc:
+    :return:
+    """
+    out_token = token.strip().replace(' ', '')
+
+
+# Preprocess articles
+import wget
+
+import gensim.downloader as api
+
+# Get information about the model or dataset
+api.info('word2vec-ruscorpora-300')
+
+# Download
+w2v_model = api.load("word2vec-ruscorpora-300")
+
 
 def clean_token(token, misc):
     """
@@ -97,6 +143,7 @@ def clean_token(token, misc):
     if token == 'Файл' and 'SpaceAfter=No' in misc:
         return None
     return out_token
+
 
 def clean_lemma(lemma, pos, lowercase=True):
     """
@@ -131,10 +178,8 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
     mem_number = None
     tagged_propn = []
 
-
     # обрабатываем текст, получаем результат в формате conllu:
     processed = pipeline.process(text)
-
 
     # пропускаем строки со служебной информацией:
     content = [l for l in processed.split('\n') if not l.startswith('#')]
@@ -193,9 +238,11 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
         tagged_propn = [word.split('_')[0] for word in tagged_propn]
     return tagged_propn
 
+
 from ufal.udpipe import Model, Pipeline
 import os
 import sys
+
 
 def add_tags(text='Текст нужно передать функции в виде строки!', modelfile='udpipe_syntagrus.model'):
     udpipe_model_url = 'https://rusvectores.org/static/models/udpipe_syntagrus.model'
@@ -216,6 +263,10 @@ def add_tags(text='Текст нужно передать функции в ви
     # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
     return output
 
+
+import numpy as np
+
+
 def get_result_vector(tagged_article):
     result = []
     for word in tagged_article:
@@ -224,10 +275,12 @@ def get_result_vector(tagged_article):
         except:
             pass
 
-    return np.array([x/300 for x in sum(result)])
+    return np.array([x / len(sum(result)) for x in sum(result)])
+
 
 def vectors_similarity(v1, v2):
     return np.sum(v1 * v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+
 
 def compare_pairs(list1, list2):
     similar_articles = []
