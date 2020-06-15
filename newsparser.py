@@ -165,10 +165,12 @@ def clean_lemma(lemma, pos, lowercase=True):
             out_lemma = ''.join(out_lemma[:-1])
     return out_lemma
 
+
 def num_replace(word):
     newtoken = 'x' * len(word)
     nw = newtoken + '_NUM'
     return nw
+
 
 def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
     entities = {'PROPN'}
