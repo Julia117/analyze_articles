@@ -6,15 +6,15 @@ import feedparser
 
 rss_meduza = "https://meduza.io/rss/all"
 rss_vedomosti = "https://www.vedomosti.ru/rss/news"
-rss_lenta = "https://www.kommersant.ru/RSS/news.xml"
+rss_kommersant = "https://www.kommersant.ru/RSS/news.xml"
 
 feed_meduza = feedparser.parse(rss_meduza)
 feed_vedomosti = feedparser.parse(rss_vedomosti)
-feed_lenta = feedparser.parse(rss_lenta)
+feed_kommersant = feedparser.parse(rss_kommersant)
 
 meduza_articles = []
 vedomosti_articles = []
-lenta_articles = []
+kommersant_articles = []
 
 
 # functions
@@ -68,8 +68,8 @@ for item in get_todays_articles(feed_meduza):
 for item in get_todays_articles(feed_vedomosti):
     vedomosti_articles.append(get_text_old(item))
 
-for item in get_todays_articles(feed_lenta):
-    lenta_articles.append(get_text_old(item))
+for item in get_todays_articles(feed_kommersant):
+    kommersant_articles.append(get_text_old(item))
 
 from newspaper import Article
 
@@ -302,7 +302,7 @@ def compare_pairs(list1, list2):
 
 meduza_tagged = [add_tags(text=text) for text in meduza_articles]
 vedomosti_tagged = [add_tags(text=text) for text in vedomosti_articles]
-lenta_tagged = [add_tags(text=text) for text in lenta_articles]
+kommersant_tagged = [add_tags(text=text) for text in _articles]
 
 meduza_vectors = [get_result_vector(article) for article in meduza_tagged]
 vedomosti_vectors = [get_result_vector(article) for article in vedomosti_tagged]
