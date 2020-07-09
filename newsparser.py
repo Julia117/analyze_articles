@@ -302,10 +302,11 @@ def compare_pairs(list1, list2):
 
 meduza_tagged = [add_tags(text=text) for text in meduza_articles]
 vedomosti_tagged = [add_tags(text=text) for text in vedomosti_articles]
-kommersant_tagged = [add_tags(text=text) for text in _articles]
+kommersant_tagged = [add_tags(text=text) for text in kommersant_articles]
 
 meduza_vectors = [get_result_vector(article) for article in meduza_tagged]
 vedomosti_vectors = [get_result_vector(article) for article in vedomosti_tagged]
+kommersant_vectors = [get_result_vector(article) for article in kommersant_tagged]
 
 print(vectors_similarity(get_result_vector(meduza_tagged[1]), get_result_vector(vedomosti_tagged[1])))
 
