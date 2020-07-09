@@ -313,3 +313,66 @@ sim_mv = compare_pairs(meduza_vectors, vedomosti_vectors)
 sim_vk = compare_pairs(vedomosti_vectors, kommersant_vectors)
 
 # Clustering
+
+from sklearn.cluster import KMeans
+import numpy as np
+
+kmeans = KMeans(n_clusters=3, random_state=0).fit(vedomosti_vectors)
+kmeans.labels_
+kmeans.cluster_centers_
+
+
+
+
+# k-means clustering
+from numpy import unique
+from numpy import where
+from sklearn.datasets import make_classification
+from sklearn.cluster import KMeans
+from matplotlib import pyplot
+# define dataset
+X, _ = make_classification(n_samples=1000, n_features=2, n_informative=2, n_redundant=0, n_clusters_per_class=1, random_state=4)
+# define the model
+model = KMeans(n_clusters=2)
+# fit the model
+model.fit(X)
+# assign a cluster to each example
+yhat = model.predict(X)
+# retrieve unique clusters
+clusters = unique(yhat)
+# create scatter plot for samples from each cluster
+for cluster in clusters:
+	# get row indexes for samples with this cluster
+	row_ix = where(yhat == cluster)
+	# create scatter of these samples
+	pyplot.scatter(X[row_ix, 0], X[row_ix, 1])
+# show the plot
+pyplot.show()
+
+
+# k-means clustering
+from numpy import unique
+from numpy import where
+from sklearn.datasets import make_classification
+from sklearn.cluster import KMeans
+from matplotlib import pyplot
+# define dataset
+#X, _ = make_classification(n_samples=1000, n_features=2, n_informative=2, n_redundant=0, n_clusters_per_class=1, random_state=4)
+# define the model
+model = KMeans(n_clusters=3)
+model.fit(kommersant_vectors)
+# assign a cluster to each example
+identified_clusters = model.fit_predict(kommersant_vectors)
+# retrieve unique clusters
+data = kommersant_vectors.copy()
+data.cluster = identified_clusters
+
+clusters = unique(yhat)
+# create scatter plot for samples from each cluster
+for cluster in clusters:
+	# get row indexes for samples with this cluster
+	row_ix = where(yhat == cluster)
+	# create scatter of these samples
+	pyplot.scatter(kommersant_vectors[row_ix, 0], X[row_ix, 1])
+# show the plot
+pyplot.show()
