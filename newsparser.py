@@ -294,7 +294,6 @@ def compare_pairs(list1, list2):
                 similar_articles.append([i, j])
             j += 1
         i += 1
-    print(i, j)
     return similar_articles
 
 
@@ -310,4 +309,7 @@ kommersant_vectors = [get_result_vector(article) for article in kommersant_tagge
 
 print(vectors_similarity(get_result_vector(meduza_tagged[1]), get_result_vector(vedomosti_tagged[1])))
 
-sim_mv = compare_pairs(meduza_tagged, vedomosti_tagged)
+sim_mv = compare_pairs(meduza_vectors, vedomosti_vectors)
+sim_vk = compare_pairs(vedomosti_vectors, kommersant_vectors)
+
+# Clustering
