@@ -113,15 +113,6 @@ api.info('word2vec-ruscorpora-300')
 w2v_model = api.load("word2vec-ruscorpora-300")
 
 
-def clean_token(token, misc):
-    """
-    :param token:
-    :param misc:
-    :return:
-    """
-    out_token = token.strip().replace(' ', '')
-
-
 # Preprocess articles
 import wget
 
