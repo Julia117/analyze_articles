@@ -101,3 +101,27 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
     if not keep_pos:
         tagged_propn = [word.split('_')[0] for word in tagged_propn]
     return tagged_propn
+
+from ufal.udpipe import Model, Pipeline
+import os
+import sys
+import wget
+
+def add_tags(text='Текст нужно передать функции в виде строки!', modelfile='udpipe_syntagrus.model'):
+    udpipe_model_url = 'https://rusvectores.org/static/models/udpipe_syntagrus.model'
+    udpipe_filename = udpipe_model_url.split('/')[-1]
+
+    if not os.path.isfile(modelfile):
+        print('UDPipe model not found. Downloading...', file=sys.stderr)
+        wget.download(udpipe_model_url)
+        print('\nLoading the model...', file=sys.stderr)
+    model = Model.load(modelfile)
+    process_pipeline = Pipeline(model, 'tokenize', Pipeline.DEFAULT, Pipeline.DEFAULT, 'conllu')
+    output = []
+    # print('Processing input...', file=sys.stderr)
+    # for line in text:
+    output = process(process_pipeline, text=text)
+
+    # print(' '.join(output))
+    # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
+    return output
