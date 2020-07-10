@@ -191,8 +191,8 @@ kommersant_vectors = [get_result_vector(article) for article in kommersant_tagge
 
 print(vectors_similarity(get_result_vector(meduza_tagged[1]), get_result_vector(vedomosti_tagged[1])))
 
-sim_mv = compare_pairs(meduza_vectors, vedomosti_vectors)
-sim_vk = compare_pairs(vedomosti_vectors, kommersant_vectors)
+similar_pairs_mv = compare_pairs(meduza_vectors, vedomosti_vectors)
+similar_pairs_vk = compare_pairs(vedomosti_vectors, kommersant_vectors)
 
 # Clustering
 
