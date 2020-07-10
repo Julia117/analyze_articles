@@ -141,7 +141,7 @@ def add_tags(text='Текст нужно передать функции в ви
     output = []
     # print('Processing input...', file=sys.stderr)
     # for line in text:
-    output = process(process_pipeline, text=text)
+    output = text_processing.process(process_pipeline, text=text)
 
     # print(' '.join(output))
     # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
