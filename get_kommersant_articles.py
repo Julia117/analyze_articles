@@ -1,10 +1,22 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-
 from newspaper import Article
-def get_articles_urls_for_date(date):
-    url = "https://www.kommersant.ru/archive/list/77/2020-05-02"
+
+
+import datetime
+date_raw = datetime.date(2020, 6, 5)
+date = date_raw.strftime("%Y-%m-%d")
+
+def get_text(url):
+    article = Article(url)
+    article.download()
+    article.parse()
+    return article.text
+
+
+def get_articles_urls_for_date(date_raw):
+    url = "https://www.kommersant.ru/archive/list/77/" + date_raw.strftime("%Y-%m-%d")
     html_content = requests.get(url).text
     html_soup = BeautifulSoup(html_content, "lxml")
     urls = []
