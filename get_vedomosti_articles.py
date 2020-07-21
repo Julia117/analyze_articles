@@ -57,11 +57,11 @@ def get_articles_urls_since_date(date_raw):
     return links_per_day
 
 
-with open("analyze_articles/urls.txt", "w") as outfile:
+with open("analyze_articles/urls_v.txt", "w") as outfile:
     json.dump(get_articles_urls_since_date(date_raw), outfile)
 
 
-with open("analyze_articles/urls.txt") as json_file:
+with open("analyze_articles/urls_v.txt") as json_file:
     urls = json.load(json_file)
 
 
@@ -82,8 +82,7 @@ def get_articles_since_date(links_per_day):
 articles = get_articles_since_date(urls)
 
 with open("analyze_articles/texts_vedomosti.txt", "w") as outfile:
-    json.dump(get_articles_urls_since_date(date_raw), outfile)
-
+    json.dump(get_articles_since_date(urls), outfile)
 
 with open("analyze_articles/texts_vedomosti.txt") as json_file:
     articles = json.load(json_file)
