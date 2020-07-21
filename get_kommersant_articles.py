@@ -17,4 +17,45 @@ def get_articles_urls_for_date(date):
             urls.append(url)
     return urls
 
-get_articles_urls_for_date("date")
+get_articles_urls_for_date(date_raw)
+
+def get_articles_urls_since_date(date_raw):
+    links_per_day = []
+    now = datetime.datetime.now()
+    while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
+        url = {}
+        urls = get_articles_urls_for_date(date_raw)
+        url["date"] = date_raw.strftime("%Y/%m/%d")
+        url["links"] = urls
+        links_per_day.append(url)
+        date_raw += datetime.timedelta(days=1)
+    return links_per_day
+
+def get_articles_since_date(links_per_day):
+    articles_per_day = []
+    for json in links_per_day:
+        article = {}
+        article["date"] = json["date"]
+        for link in json["links"]:
+            texts = []
+            text = get_text(link)
+            texts.append(text)
+            article['texts'] = texts
+        articles_per_day.append(article)
+    return articles_per_day
+
+
+with open("analyze_articles/urls_k.txt", "w") as outfile:
+    json.dump(get_articles_urls_since_date(date_raw), outfile)
+
+
+with open("analyze_articles/urls_k.txt") as json_file:
+    urls = json.load(json_file)
+
+with open("analyze_articles/texts_kommersant.txt", "w") as outfile:
+    json.dump(get_articles_since_date(urls), outfile)
+
+with open("analyze_articles/texts_kommersant.txt") as json_file:
+    articles = json.load(json_file)
+
+get_articles_urls_for_date(date_raw)
