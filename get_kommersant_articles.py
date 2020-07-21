@@ -3,6 +3,9 @@ import requests
 import json
 from newspaper import Article
 
+from selenium import webdriver
+import time
+
 
 import datetime
 date_raw = datetime.date(2020, 6, 5)
@@ -17,8 +20,46 @@ def get_text(url):
 
 def get_articles_urls_for_date(date_raw):
     url = "https://www.kommersant.ru/archive/list/77/" + date_raw.strftime("%Y-%m-%d")
-    html_content = requests.get(url).text
+
+    driver = webdriver.PhantomJS("/Users/yulialysenko/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs")
+    driver.get(url)
+    # driver.implicitly_wait(10)
+
+    end = 0
+    while end < 5:
+        print(end)
+        try:
+            driver.find_element_by_css_selector('.ui_button.lazyload-button').click()
+        except:
+            end = end + 1
+
+
+    # html_content = requests.get(url).text
+    # html_soup = BeautifulSoup(html_content, "lxml")
+
+    # scrolling
+
+    # lastHeight = driver.execute_script("return document.body.scrollHeight")
+    # # print(lastHeight)
+    #
+    # pause = 0.5
+    # while True:
+    #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    #     time.sleep(pause)
+    #
+    #     newHeight = driver.execute_script("return document.body.scrollHeight")
+    #     if newHeight == lastHeight:
+    #         break
+    #     lastHeight = newHeight
+    #     button = driver.find_element_by_class_name("ui_button ui_button--load_content lazyload-button")
+    #     button.click()
+    #     print(lastHeight)
+
+    # html_content = requests.get(url).text
+
+    html_content = driver.page_source
     html_soup = BeautifulSoup(html_content, "lxml")
+
     urls = []
     # result = html_soup.find_all('article',attrs={"class": "archive_result__item_text"})
     for c in html_soup.find_all(attrs={"class": "archive_result__item_text"}):
