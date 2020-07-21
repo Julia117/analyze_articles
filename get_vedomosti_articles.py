@@ -14,8 +14,8 @@ def get_text(url):
 
 
 #get urls from Vedomosti archive
-def get_articles_urls_for_date(date):
-    url = "https://www.vedomosti.ru/archive/" + date
+def get_articles_urls_for_date(date_raw):
+    url = "https://www.vedomosti.ru/archive/" + date_raw.strftime("%Y/%m/%d")
     html_content = requests.get(url).text
     html_soup = BeautifulSoup(html_content, "lxml")
 
@@ -49,7 +49,7 @@ def get_articles_urls_since_date(date_raw):
     now = datetime.datetime.now()
     while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
         url = {}
-        urls = get_articles_urls_for_date(date_raw.strftime("%Y/%m/%d"))
+        urls = get_articles_urls_for_date(date_raw)
         url["date"] = date_raw.strftime("%Y/%m/%d")
         url["links"] = urls
         links_per_day.append(url)
