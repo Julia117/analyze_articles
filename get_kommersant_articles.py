@@ -4,7 +4,9 @@ import json
 from newspaper import Article
 
 from selenium import webdriver
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 
 import datetime
@@ -23,41 +25,18 @@ def get_articles_urls_for_date(date_raw):
 
     driver = webdriver.PhantomJS("/Users/yulialysenko/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs")
     driver.get(url)
-    # driver.implicitly_wait(10)
 
-    end = 0
-    while end < 5:
-        print(end)
+    end = False
+    while not end:
         try:
+            WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, '.ui_button.lazyload-button')))
             driver.find_element_by_css_selector('.ui_button.lazyload-button').click()
         except:
-            end = end + 1
-
-
-    # html_content = requests.get(url).text
-    # html_soup = BeautifulSoup(html_content, "lxml")
-
-    # scrolling
-
-    # lastHeight = driver.execute_script("return document.body.scrollHeight")
-    # # print(lastHeight)
-    #
-    # pause = 0.5
-    # while True:
-    #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    #     time.sleep(pause)
-    #
-    #     newHeight = driver.execute_script("return document.body.scrollHeight")
-    #     if newHeight == lastHeight:
-    #         break
-    #     lastHeight = newHeight
-    #     button = driver.find_element_by_class_name("ui_button ui_button--load_content lazyload-button")
-    #     button.click()
-    #     print(lastHeight)
-
-    # html_content = requests.get(url).text
+            end = True
 
     html_content = driver.page_source
+    driver.quit()
     html_soup = BeautifulSoup(html_content, "lxml")
 
     urls = []
