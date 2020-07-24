@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import requests
 import json
 from newspaper import Article
 
@@ -11,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import datetime
 date_raw = datetime.date(2020, 6, 5)
-date = date_raw.strftime("%Y-%m-%d")
+
 
 def get_text(url):
     article = Article(url)
@@ -39,20 +38,22 @@ def get_articles_urls_for_date(date_raw):
     driver.quit()
     html_soup = BeautifulSoup(html_content, "lxml")
 
-    urls = []
-    # result = html_soup.find_all('article',attrs={"class": "archive_result__item_text"})
+    links = []
     for c in html_soup.find_all(attrs={"class": "archive_result__item_text"}):
         href = c.contents[1].attrs['href']
         url = ("https://www.kommersant.ru" + href)
-        urls.append(url)
-    return urls
+        links.append(url)
+    return links
+
 
 get_articles_urls_for_date(date_raw)
+
 
 def get_articles_urls_since_date(date_raw):
     links_per_day = []
     now = datetime.datetime.now()
     while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
+        print(date_raw)
         url = {}
         urls = get_articles_urls_for_date(date_raw)
         url["date"] = date_raw.strftime("%Y/%m/%d")
@@ -60,6 +61,7 @@ def get_articles_urls_since_date(date_raw):
         links_per_day.append(url)
         date_raw += datetime.timedelta(days=1)
     return links_per_day
+
 
 def get_articles_since_date(links_per_day):
     articles_per_day = []
