@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 import json
 from newspaper import Article
 
@@ -40,11 +39,10 @@ def write_to_file(filename, new):
 
 def get_articles_urls_for_date(date_raw):
     url = "https://www.kommersant.ru/archive/list/77/" + date_raw.strftime("%Y-%m-%d")
-
     driver = webdriver.PhantomJS("/Users/yulialysenko/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs")
     driver.get(url)
-
     end = False
+
     while not end:
         try:
             WebDriverWait(driver, 10).until(
@@ -65,7 +63,7 @@ def get_articles_urls_for_date(date_raw):
     return links
 
 
-get_articles_urls_for_date(date_raw)
+# get_articles_urls_for_date(date_raw)
 
 
 def get_articles_urls_since_date(date_raw):
@@ -88,6 +86,9 @@ def get_articles_urls_since_date(date_raw):
     return links_per_day
 
 
+get_articles_urls_since_date(date_raw)
+
+
 def get_articles_since_date(links_per_day):
     articles_per_day = []
     for json in links_per_day:
@@ -101,11 +102,14 @@ def get_articles_since_date(links_per_day):
         articles_per_day.append(article)
     return articles_per_day
 
-
-with open("analyze_articles/urls_k.txt", "w") as outfile:
-    json.dump(get_articles_urls_since_date(date_raw), outfile)
+    # return articles_per_day
 
 
+#
+# with open("analyze_articles/urls_k.txt", "w") as outfile:
+#     json.dump(get_articles_urls_since_date(date_raw), outfile)
+#
+#
 with open("analyze_articles/urls_k.txt") as json_file:
     urls = json.load(json_file)
 
