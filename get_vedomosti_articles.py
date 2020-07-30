@@ -64,6 +64,9 @@ with open("analyze_articles/urls_v.txt", "w") as outfile:
 with open("analyze_articles/urls_v.txt") as json_file:
     urls = json.load(json_file)
 
+def write_to_file(filename, new):
+    with open(filename, "w") as outfile:
+        json.dump(new, outfile)
 
 def get_articles_since_date(links_per_day):
     articles_per_day = []
