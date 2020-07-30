@@ -71,14 +71,20 @@ get_articles_urls_for_date(date_raw)
 def get_articles_urls_since_date(date_raw):
     links_per_day = []
     now = datetime.datetime.now()
-    while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
-        print(date_raw)
-        url = {}
-        urls = get_articles_urls_for_date(date_raw)
-        url["date"] = date_raw.strftime("%Y/%m/%d")
-        url["links"] = urls
-        links_per_day.append(url)
-        date_raw += datetime.timedelta(days=1)
+    try:
+        while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
+            print(date_raw)
+            url = {}
+            urls = get_articles_urls_for_date(date_raw)
+            url["date"] = date_raw.strftime("%Y/%m/%d")
+            url["links"] = urls
+            links_per_day.append(url)
+
+            write_to_file("analyze_articles/urls_k.txt", links_per_day)
+            date_raw += datetime.timedelta(days=1)
+    finally:
+        write_to_file("analyze_articles/urls_k.txt", links_per_day)
+
     return links_per_day
 
 
