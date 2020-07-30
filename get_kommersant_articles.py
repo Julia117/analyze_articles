@@ -91,16 +91,21 @@ get_articles_urls_since_date(date_raw)
 
 def get_articles_since_date(links_per_day):
     articles_per_day = []
-    for json in links_per_day:
-        article = {}
-        article["date"] = json["date"]
-        for link in json["links"]:
+    try:
+        for json_obj in links_per_day:
+            article = {}
+            article["date"] = json_obj["date"]
+            print(json_obj['date'])
             texts = []
-            text = get_text(link)
-            texts.append(text)
+
+            for link in json_obj["links"]:
+                text = get_text(link)
+                texts.append(text)
             article['texts'] = texts
-        articles_per_day.append(article)
-    return articles_per_day
+            articles_per_day.append(article)
+            write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
+    finally:
+        write_to_file("analyze_articles/texts_kommersant.txt", article)
 
     # return articles_per_day
 
