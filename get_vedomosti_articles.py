@@ -81,6 +81,22 @@ def get_articles_since_date(links_per_day):
         articles_per_day.append(article)
     return articles_per_day
 
+# def get_articles_since_date(links_per_day):
+#     articles_per_day = []
+#     try:
+#         for json_obj in links_per_day:
+#             article = {}
+#             article["date"] = json_obj["date"]
+#             print(json_obj['date'])
+#             for link in json_obj["links"]:
+#                 texts = []
+#                 text = get_text(link)
+#                 texts.append(text)
+#                 article['texts'] = texts
+#             articles_per_day.append(article)
+#             write_to_file("analyze_articles/texts_vedomosti.txt", articles_per_day)
+#     finally:
+#         write_to_file("analyze_articles/texts_vedomosti.txt", article)
 
 articles = get_articles_since_date(urls)
 
