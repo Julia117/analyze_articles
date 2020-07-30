@@ -73,11 +73,11 @@ def get_articles_since_date(links_per_day):
     for json in links_per_day:
         article = {}
         article["date"] = json["date"]
+        texts = []
         for link in json["links"]:
-            texts = []
             text = get_text(link)
             texts.append(text)
-            article['texts'] = texts
+        article['texts'] = texts
         articles_per_day.append(article)
     return articles_per_day
 
