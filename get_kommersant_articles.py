@@ -78,7 +78,7 @@ def get_articles_urls_since_date(date_raw):
             url["links"] = urls
             links_per_day.append(url)
 
-            write_to_file("analyze_articles/urls_k.txt", links_per_day)
+            # write_to_file("analyze_articles/urls_k.txt", links_per_day)
             date_raw += datetime.timedelta(days=1)
     finally:
         write_to_file("analyze_articles/urls_k.txt", links_per_day)
@@ -103,9 +103,9 @@ def get_articles_since_date(links_per_day):
                 texts.append(text)
             article['texts'] = texts
             articles_per_day.append(article)
-            write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
+            # write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
     finally:
-        write_to_file("analyze_articles/texts_kommersant.txt", article)
+        write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
 
     # return articles_per_day
 
