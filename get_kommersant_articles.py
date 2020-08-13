@@ -20,16 +20,16 @@ def get_text(url):
 from bs4 import BeautifulSoup
 
 
-def get_text_new(item):
-    url = item['link']
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
-    texts = soup.find_all('p')
-    texts_list = []
-    for string in texts:
-        texts_list.append(string.text)
-    result = "".join(texts_list)
-    return result.replace("\xa0", " ")
+# def get_text_new(item):
+#     url = item['link']
+#     page = requests.get(url)
+#     soup = BeautifulSoup(page.content, 'html.parser')
+#     texts = soup.find_all('p')
+#     texts_list = []
+#     for string in texts:
+#         texts_list.append(string.text)
+#     result = "".join(texts_list)
+#     return result.replace("\xa0", " ")
 
 def write_to_file(filename, new):
     with open(filename, "w") as outfile:
