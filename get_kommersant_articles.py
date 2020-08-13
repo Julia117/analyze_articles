@@ -116,4 +116,11 @@ with open("analyze_articles/texts_kommersant.txt", "w") as outfile:
 with open("analyze_articles/texts_kommersant.txt") as json_file:
     articles = json.load(json_file)
 
-get_articles_urls_for_date(date_raw)
+
+f = open("analyze_articles/texts_kommersant.txt", "r")
+text = f.read()
+text = text.replace("null", "\"20")
+text = "{" + text
+f = open("analyze_articles/texts_kommersant.txt", "w")
+f.write(text)
+f.close()
