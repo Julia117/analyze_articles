@@ -22,21 +22,28 @@ def write_to_file(filename, new):
 
 def merge_articles_data(dict1, dict2):
     result = {}
+    if not dict1:
+        return dict2
+
     for key in (dict1.keys() | dict2.keys()):
         result.setdefault(key, [])
         if key in dict1: result[key] += dict1[key]
         if key in dict2: result[key] += dict2[key]
-    return result
+
+    # TODO: delete ASAP
+    temp = {}
+    for x in sorted(result.keys()):
+        temp[x] = result[x]
+    return temp
 
 
-def get_articles_since_date(date_raw):
+def get_articles_urls_since_date(date_raw):
     previous_date = (date_raw - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
-    articles_urls_list = []
+    articles_urls_list = {}
     date_is_reached = False
     i = 0
 
-    articles_before = {}
     while not date_is_reached:
         url = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=" + str(i) + "&per_page=100"
         response = requests.get(url)
@@ -52,7 +59,7 @@ def get_articles_since_date(date_raw):
         # check if the algorithm reached the date
         date_is_reached = previous_date in articles_raw
 
-        articles_before = merge_articles_data(articles_before, articles_raw)
+        articles_urls_list = merge_articles_data(articles_urls_list, articles_raw)
         i = i + 1
 
     for article in articles_before:
@@ -64,32 +71,32 @@ def get_articles_since_date(date_raw):
     return articles_urls_list
 
 
-with open("analyze_articles/urls_m.txt", "w") as outfile:
-    json.dump(get_articles_since_date(date_raw), outfile)
+with open("analyze_articles/urls_meduza.txt", "w") as outfile:
+    json.dump(get_articles_urls_since_date(date_raw), outfile)
 
-with open("analyze_articles/urls_m.txt") as json_file:
+with open("analyze_articles/urls_meduza.txt") as json_file:
     urls = json.load(json_file)
 
-urls = sorted(urls, key=lambda k: k['date'])
 
-def get_articles_since_date(links_per_day):
-    articles_per_day = []
+def get_articles_since_date(all_links):
+    articles = {}
     try:
-        for json_obj in links_per_day:
-            article = {}
-            article["date"] = json_obj["date"]
-            print(json_obj['date'])
+        for date in all_links:
+            articles = {}
+            print(date)
+
             texts = []
 
-            for link in json_obj["links"]:
+            for link in all_links[date]:
                 text = get_text(link)
                 texts.append(text)
 
-            article['texts'] = texts
-            articles_per_day.append(article)
+            articles[date] = texts
+            # articles_per_day.append(article)
             # write_to_file("analyze_articles/texts_meduza.txt", articles_per_day)
     finally:
-        write_to_file("analyze_articles/texts_meduza.txt", articles_per_day)
+        write_to_file("analyze_articles/texts_meduza.txt", articles)
+
 
 get_articles_since_date(urls)
 with open("analyze_articles/texts_meduza.txt") as json_file:

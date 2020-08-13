@@ -17,7 +17,6 @@ def get_text(url):
     article.parse()
     return article.text
 
-import requests
 from bs4 import BeautifulSoup
 
 
@@ -67,47 +66,40 @@ def get_articles_urls_for_date(date_raw):
 
 
 def get_articles_urls_since_date(date_raw):
-    links_per_day = []
+    links= {}
     now = datetime.datetime.now()
-    try:
-        while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
-            print(date_raw)
-            url = {}
-            urls = get_articles_urls_for_date(date_raw)
-            url["date"] = date_raw.strftime("%Y/%m/%d")
-            url["links"] = urls
-            links_per_day.append(url)
-
-            # write_to_file("analyze_articles/urls_k.txt", links_per_day)
-            date_raw += datetime.timedelta(days=1)
-    finally:
-        write_to_file("analyze_articles/urls_k.txt", links_per_day)
-
-    return links_per_day
+    while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
+        print(date_raw.strftime("%Y/%m/%d"))
+        urls = get_articles_urls_for_date(date_raw)
+        links[date_raw.strftime("%Y/%m/%d")] = urls
+        date_raw += datetime.timedelta(days=1)
+    return links
 
 
 get_articles_urls_since_date(date_raw)
+with open("analyze_articles/urls_kommersant.txt", "w") as outfile:
+    json.dump(get_articles_urls_since_date(date_raw), outfile)
 
 
-def get_articles_since_date(links_per_day):
-    articles_per_day = []
+def get_articles_since_date(all_links):
+    articles = {}
     try:
-        for json_obj in links_per_day:
-            article = {}
-            article["date"] = json_obj["date"]
-            print(json_obj['date'])
+        for date in all_links:
+            print(date)
             texts = []
 
-            for link in json_obj["links"]:
-                text = get_text(link)
+            for link in all_links[date]:
+                try:
+                    text = get_text(link)
+                except:
+                    text = "ERROR"
                 texts.append(text)
-            article['texts'] = texts
-            articles_per_day.append(article)
-            # write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
-    finally:
-        write_to_file("analyze_articles/texts_kommersant.txt", articles_per_day)
 
-    # return articles_per_day
+            articles[date] = texts
+
+    finally:
+        print(list(articles.keys())[len(articles.keys())-1])
+        write_to_file("analyze_articles/texts_kommersant.txt", articles)
 
 
 #
@@ -115,7 +107,7 @@ def get_articles_since_date(links_per_day):
 #     json.dump(get_articles_urls_since_date(date_raw), outfile)
 #
 #
-with open("analyze_articles/urls_k.txt") as json_file:
+with open("analyze_articles/urls_kommersant.txt") as json_file:
     urls = json.load(json_file)
 
 with open("analyze_articles/texts_kommersant.txt", "w") as outfile:

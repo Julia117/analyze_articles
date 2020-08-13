@@ -1,10 +1,8 @@
-from analyze_articles import newsparser
 from bs4 import BeautifulSoup
 import requests
 import json
 
 from newspaper import Article
-
 
 def get_text(url):
     article = Article(url)
@@ -45,41 +43,46 @@ date = date_raw.strftime("%Y/%m/%d")
 
 
 def get_articles_urls_since_date(date_raw):
-    links_per_day = []
+    links= {}
     now = datetime.datetime.now()
     while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
-        url = {}
         urls = get_articles_urls_for_date(date_raw)
-        url["date"] = date_raw.strftime("%Y/%m/%d")
-        url["links"] = urls
-        links_per_day.append(url)
+        links[date_raw.strftime("%Y/%m/%d")] = urls
         date_raw += datetime.timedelta(days=1)
-    return links_per_day
+    return links
 
 
-with open("analyze_articles/urls_v.txt", "w") as outfile:
+with open("analyze_articles/urls_vedomosti.txt", "w") as outfile:
     json.dump(get_articles_urls_since_date(date_raw), outfile)
 
 
-with open("analyze_articles/urls_v.txt") as json_file:
+with open("analyze_articles/urls_vedomosti.txt") as json_file:
     urls = json.load(json_file)
 
 def write_to_file(filename, new):
     with open(filename, "w") as outfile:
         json.dump(new, outfile)
 
-def get_articles_since_date(links_per_day):
-    articles_per_day = []
-    for json in links_per_day:
-        article = {}
-        article["date"] = json["date"]
-        texts = []
-        for link in json["links"]:
-            text = get_text(link)
-            texts.append(text)
-        article['texts'] = texts
-        articles_per_day.append(article)
-    return articles_per_day
+def get_articles_since_date(all_links):
+    articles = {}
+    try:
+        for date in all_links:
+            print(date)
+            texts = []
+
+            for link in all_links[date]:
+                try:
+                    text = get_text(link)
+                except:
+                    text = "ERROR"
+                texts.append(text)
+
+            articles[date] = texts
+
+    finally:
+        print(list(articles.keys())[len(articles.keys())-1])
+        write_to_file("analyze_articles/texts_vedomosti.txt", articles)
+
 
 # def get_articles_since_date(links_per_day):
 #     articles_per_day = []
@@ -98,7 +101,8 @@ def get_articles_since_date(links_per_day):
 #     finally:
 #         write_to_file("analyze_articles/texts_vedomosti.txt", article)
 
-articles = get_articles_since_date(urls)
+
+get_articles_since_date(urls)
 
 with open("analyze_articles/texts_vedomosti.txt", "w") as outfile:
     json.dump(get_articles_since_date(urls), outfile)
