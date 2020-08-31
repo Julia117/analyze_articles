@@ -142,7 +142,8 @@ def get_articles_since_date(all_links, file):
                     text = get_text(link)
                 except:
                     text = "ERROR"
-                texts.append(text)
+                if text:
+                    texts.append(text)
 
             articles[date] = texts
 
