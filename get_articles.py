@@ -119,7 +119,8 @@ def get_links_since_date_meduza(date_raw):
         for item in info:
             item = info[item]
             articles_raw.setdefault(item['pub_date'], [])
-            articles_raw[item['pub_date']].append("https://meduza.io/" + item['url'])
+            date = item['pub_date'].replace('-', '/')
+            articles_raw[date].append("https://meduza.io/" + item['url'])
 
         # check if the algorithm reached the date
         date_is_reached = previous_date in articles_raw
