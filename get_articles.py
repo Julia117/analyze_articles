@@ -23,6 +23,11 @@ def write_to_file(filename, new):
     with open(filename, "w") as outfile:
         json.dump(new, outfile)
 
+def read_from_file(filename):
+    with open(filename) as json_file:
+        output = json.load(json_file)
+    return output
+
 def merge_articles_data(dict1, dict2):
     result = {}
     if not dict1:
