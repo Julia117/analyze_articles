@@ -102,8 +102,11 @@ def get_links_since_date(date_raw, links_for_date_func): ###links_for_date_func 
     return links
 
 
+from datetime import datetime
+
+
 def get_links_since_date_meduza(date_raw):
-    previous_date = (date_raw - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    # previous_date = (date_raw - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
     links = {}
     date_is_reached = False
@@ -118,12 +121,13 @@ def get_links_since_date_meduza(date_raw):
         articles_raw = {}
         for item in info:
             item = info[item]
-            articles_raw.setdefault(item['pub_date'], [])
             date = item['pub_date'].replace('-', '/')
-            articles_raw[date].append("https://meduza.io/" + item['url'])
-
-        # check if the algorithm reached the date
-        date_is_reached = previous_date in articles_raw
+            articles_raw.setdefault(date, [])
+            if datetime.strptime(date, "%Y/%m/%d").date() >= date_raw:
+                articles_raw[date].append("https://meduza.io/" + item['url'])
+            else:
+                articles_raw.pop(date)
+                date_is_reached = True
 
         links = merge_articles_data(links, articles_raw)
         i = i + 1
