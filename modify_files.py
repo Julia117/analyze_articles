@@ -44,7 +44,7 @@ def add_tags_to_articles(articles, file):
             print(day)
             tagged_articles[day] = [text_processing.add_tags(text=text) for text in articles[day]]
     finally:
-        write_to_file(file, tagged_articles)
+        file_handling.add_to_file(file, tagged_articles)
     return tagged_articles
 
 def artice_to_vector(tagged_articles, w2v_model):
