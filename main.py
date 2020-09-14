@@ -22,7 +22,10 @@ VECTORS_VEDOMOSTI = "analyze_articles/vectors_vedomosti.txt"
 VECTORS_KOMMERSANT = "analyze_articles/vectors_kommersant.txt"
 
 import datetime
-date_raw = datetime.date(2020, 8 , 10)
+date_start = datetime.date(2020, 3, 1)
+date_end = datetime.date(2020, 5, 31)
+period = get_articles.date_range(date_start, date_end)
+# period = get_articles.get_missing_dates(date_start, date_end, VECTORS_KOMMERSANT)
 
 urls_v = get_articles.get_links_since_date(date_raw, get_articles.get_links_for_date_vedomosti)
 urls_k = get_articles.get_links_since_date(date_raw, get_articles.get_links_for_date_kommersant)
