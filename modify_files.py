@@ -106,36 +106,10 @@ def make_plot(similar_vk, similar_vm, similar_mk):
 
     # plt.close()
 
-plt.close()
-# result_vm = {}
-# for date in similar_vm:
-#     result_vm[date] = len(similar_vm[date])
-#
-# from datetime import timedelta
-# # date_list = [datetime.strptime(list(result_vm.keys())[0],'%Y/%m/%d') - datetime.timedelta(days=x) for x in range(10)]
-#
-# # datelist = pd.date_range(pd.datetime(2017, 1, 1).strftime('%Y-%m-%d'), periods=42).tolist()
-#
-# # newdate = pd.date_range(result_vm.keys().strftime('%Y/%m/%d'), periods=10).tolist()
-# import matplotlib.pyplot as plt
-#
-# # There are a lot of overlapping labels that slow down the rendering
-# # So, first we get rid of the labels
-# plt.tick_params(labelbottom=False)
-#
-# # Then we plot the graph
-# plt.plot(list(result_vm.keys()), list(result_vm.values()))
-#
-# # Filter all the redundant labels
-# plt.xticks(list(result_vm.keys())[::7])
-#
-# # And finally, we place the labels back
-# plt.tick_params(labelbottom=True)
-# plt.xticks(rotation=30, fontsize=8)
-# plt.tick_params(labelbottom=True)
-#
-# # TODO
-# plt.axvline(x = '2020/08/09', color='r', linewidth=0.5)
-# plt.axvline(x = '2020/07/07', color='r', linewidth=0.5)
-#
+def replace_0(dict):
+    for day in dict:
+        if  dict[day] == []:
+            dict[day] = [-1,-1]
+    return dict
+
 # plt.close()
