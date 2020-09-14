@@ -39,7 +39,7 @@ def get_articles_urls_for_date(date_raw):
 
 import datetime
 date_raw = datetime.date(2020, 6, 5)
-date = date_raw.strftime("%Y/%m/%d")
+# date = date_raw.strftime("%Y/%m/%d")
 
 
 def get_articles_urls_since_date(date_raw):

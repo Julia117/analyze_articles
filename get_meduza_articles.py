@@ -2,7 +2,7 @@ from newspaper import Article
 import requests
 import datetime
 import json
-
+import collections
 
 date_raw = datetime.date(2020, 6, 5)
 date = date_raw.strftime("%Y/%m/%d")
@@ -62,11 +62,11 @@ def get_articles_urls_since_date(date_raw):
         articles_urls_list = merge_articles_data(articles_urls_list, articles_raw)
         i = i + 1
 
-    for article in articles_before:
-        one_article = {}
-        one_article["date"] = article.replace("-", "/")
-        one_article["links"] = articles_before[article]
-        articles_urls_list.append(one_article)
+    # for article in articles_before:
+    #     one_article = {}
+    #     one_article["date"] = article.replace("-", "/")
+    #     one_article["links"] = articles_before[article]
+    #     articles_urls_list.append(one_article)
 
     return articles_urls_list
 
