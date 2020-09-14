@@ -1,8 +1,9 @@
 from analyze_articles import text_processing
 from analyze_articles import file_handling
 import numpy as np
-
-import json
+import matplotlib.pyplot as plt
+from datetime import datetime
+import math
 
 
 def get_result_vector(tagged_article, w2v_model):
@@ -110,15 +111,21 @@ def similar_pairs_percentage(pairs, vectors1, vectors2):
             num_of_pairs.append(len(pairs[day]) / (len(vectors1[day])*len(vectors2[day])))
     return num_of_pairs
 
-
-def make_plot():
+def make_plot(similar_vk, similar_vm, similar_mk):
     fig, axs = plt.subplots(3, 1, sharex=True)
 
     # There are a lot of overlapping labels that slow down the rendering
     # So, first we get rid of the labels
-    # plt.tick_params(labelbottom=False)
+    # plt.tick_params(labelbottom=False) 
     # Then we plot the graph
     # plt.plot(list(result.keys()), list(result.values()))
+    # similar_vm = compare_pairs(vectors_v, vectors_m)
+    # similar_vk = compare_pairs(vectors_v, vectors_k)
+    # similar_mk = compare_pairs(vectors_m, vectors_k)
+
+    # axs[0].plot(list(similar_mk.keys()), similar_pairs_percentage(similar_mk, vectors_m, vectors_k))
+    # axs[1].plot(list(similar_vk.keys()), similar_pairs_percentage(similar_vk, vectors_v, vectors_k))
+    # axs[2].plot(list(similar_vm.keys()), similar_pairs_percentage(similar_vm, vectors_v, vectors_m))
 
     axs[0].plot(list(similar_mk.keys()), list(len(x) for x in similar_mk.values()))
     axs[0].set_title("meduza~kommersant")
