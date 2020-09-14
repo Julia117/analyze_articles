@@ -5,9 +5,21 @@ import gensim.downloader as api
 import matplotlib.pyplot as plt
 
 
+URLS_MEDUZA = "analyze_articles/urls_meduza.txt"
+URLS_VEDOMOSTI = "analyze_articles/urls_vedomosti.txt"
+URLS_KOMMERSANT = "analyze_articles/urls_kommersant.txt"
+
 TEXTS_MEDUZA = "analyze_articles/texts_meduza.txt"
 TEXTS_VEDOMOSTI = "analyze_articles/texts_vedomosti.txt"
 TEXTS_KOMMERSANT = "analyze_articles/texts_kommersant.txt"
+
+TAGGED_MEDUZA = "analyze_articles/tagged_meduza.txt"
+TAGGED_VEDOMOSTI = "analyze_articles/tagged_vedomosti.txt"
+TAGGED_KOMMERSANT = "analyze_articles/tagged_kommersant.txt"
+
+VECTORS_MEDUZA = "analyze_articles/vectors_meduza.txt"
+VECTORS_VEDOMOSTI = "analyze_articles/vectors_vedomosti.txt"
+VECTORS_KOMMERSANT = "analyze_articles/vectors_kommersant.txt"
 
 import datetime
 date_raw = datetime.date(2020, 8 , 10)
