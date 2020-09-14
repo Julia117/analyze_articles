@@ -1,6 +1,8 @@
 from analyze_articles import get_articles
-import json
+from analyze_articles import modify_files
+from analyze_articles import file_handling
 import gensim.downloader as api
+import matplotlib.pyplot as plt
 
 
 TEXTS_MEDUZA = "analyze_articles/texts_meduza.txt"
