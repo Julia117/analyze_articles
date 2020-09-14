@@ -69,24 +69,22 @@ def get_links_for_date_vedomosti(date_raw):
             urls = (["https://www.vedomosti.ru" + t["url"] for t in y["main"]])
             return urls
 
+
 #all articles since given date
-def get_links_since_date(date_raw, links_for_date_func): ###links_for_date_func = vedomosti/kommersant
+def get_links_for_period(date_raw_list, links_for_date_func): ###links_for_date_func = vedomosti/kommersant
     links= {}
-    now = datetime.datetime.now()
-    while date_raw.strftime("%Y/%m/%d") <= now.strftime("%Y/%m/%d"):
-        print(date_raw.strftime("%Y/%m/%d"))
-        urls = links_for_date_func(date_raw)
-        links[date_raw.strftime("%Y/%m/%d")] = urls
-        date_raw += datetime.timedelta(days=1)
+    for date in date_raw_list:
+        print(date.strftime("%Y/%m/%d"))
+        urls = links_for_date_func(date)
+        links[date.strftime("%Y/%m/%d")] = urls
+        # date_raw_start += datetime.timedelta(days=1)
     return links
 
 
 from datetime import datetime
 
 
-def get_links_since_date_meduza(date_raw):
-    # previous_date = (date_raw - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-
+def get_links_for_period_meduza(date_raw_list):
     links = {}
     date_is_reached = False
     i = 0
@@ -95,41 +93,62 @@ def get_links_since_date_meduza(date_raw):
         url = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=" + str(i) + "&per_page=100"
         response = requests.get(url)
         json_data = response.json()
-
         info = json_data['documents']
-        articles_raw = {}
+        articles = {}
+
         for item in info:
             item = info[item]
             date = item['pub_date'].replace('-', '/')
-            articles_raw.setdefault(date, [])
-            if datetime.strptime(date, "%Y/%m/%d").date() >= date_raw:
-                articles_raw[date].append("https://meduza.io/" + item['url'])
+            articles.setdefault(date, [])
+            date_raw = datetime.strptime(date, "%Y/%m/%d").date()
+            if date_raw >= min(date_raw_list):
+                if date_raw <= max(date_raw_list) and date_raw in date_raw_list:
+                    articles[date].append("https://meduza.io/" + item['url'])
+                else:
+                    articles.pop(date)
             else:
-                articles_raw.pop(date)
+                articles.pop(date)
                 date_is_reached = True
 
-        links = merge_articles_data(links, articles_raw)
+        links = file_handling.merge_articles_data(links, articles)
         i = i + 1
     return links
 
 
-def get_articles_since_date(all_links, file):
+def get_articles_for_period(all_links, file, date_raw_list):
     articles = {}
     try:
         for date in all_links:
-            print(date)
-            texts = []
+            if datetime.strptime(date, "%Y/%m/%d").date() in date_raw_list:
+                print(date)
+                texts = []
 
-            for link in all_links[date]:
-                try:
-                    text = get_text(link)
-                except:
-                    text = "ERROR"
-                if text:
-                    texts.append(text)
+                for link in all_links[date]:
+                    try:
+                        text = get_text(link)
+                    except:
+                        text = "ERROR"
+                    if text:
+                        texts.append(text)
 
-            articles[date] = texts
+                articles[date] = texts
 
     finally:
         print(list(articles.keys())[len(articles.keys())-1])
-        write_to_file(file, articles)
+        file_handling.add_to_file(file, articles)
+
+
+from datetime import timedelta
+
+def date_range(date1,date2):
+    result = []
+    while date1 <= date2:
+        # yield date1
+        result.append(date1)
+        date1 = date1 + timedelta(days=1)
+    return result
+
+def get_missing_dates(start_date, end_date, file):
+    data = file_handling.read_from_file(file)
+    return list(set(date_range(start_date, end_date)) - set([datetime.strptime(date, "%Y/%m/%d").date() for date in data.keys()]))
+
