@@ -1,19 +1,9 @@
 from analyze_articles import text_processing
+from analyze_articles import file_handling
 import numpy as np
 
 import json
 
-TAGGED_MEDUZA = "analyze_articles/tagged_meduza.txt"
-TAGGED_VEDOMOSTI = "analyze_articles/tagged_vedomosti.txt"
-TAGGED_KOMMERSANT = "analyze_articles/tagged_kommersant.txt"
-
-VECTORS_MEDUZA = "analyze_articles/vectors_meduza.txt"
-VECTORS_VEDOMOSTI = "analyze_articles/vectors_vedomosti.txt"
-VECTORS_KOMMERSANT = "analyze_articles/vectors_kommersant.txt"
-
-def write_to_file(filename, new):
-    with open(filename, "w") as outfile:
-        json.dump(new, outfile)
 
 def get_result_vector(tagged_article, w2v_model):
     result = []
