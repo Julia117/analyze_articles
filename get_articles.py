@@ -1,5 +1,5 @@
 #functions to download links and texts for newspapers
-
+from analyze_articles import  file_handling
 import json
 from newspaper import Article
 from bs4 import BeautifulSoup
@@ -18,32 +18,6 @@ def get_text(url):
     article.download()
     article.parse()
     return article.text
-
-def write_to_file(filename, new):
-    with open(filename, "w") as outfile:
-        json.dump(new, outfile)
-
-def read_from_file(filename):
-    with open(filename) as json_file:
-        output = json.load(json_file)
-    return output
-
-def merge_articles_data(dict1, dict2):
-    result = {}
-    if not dict1:
-        return dict2
-
-    for key in (dict1.keys() | dict2.keys()):
-        result.setdefault(key, [])
-        if key in dict1: result[key] += dict1[key]
-        if key in dict2: result[key] += dict2[key]
-
-    # TODO: delete ASAP
-    temp = {}
-    for x in sorted(result.keys()):
-        temp[x] = result[x]
-    return temp
-
 
 #articles for one day
 def get_links_for_date_kommersant(date_raw):
