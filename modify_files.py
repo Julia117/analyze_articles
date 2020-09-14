@@ -113,3 +113,46 @@ def replace_0(dict):
     return dict
 
 # plt.close()
+def make_plot_log(similar_vm, similar_vk, similar_mk):
+    fig, axs = plt.subplots(3, 1, sharex=True)
+
+    # similar_vm = replace_0(similar_vm)
+    # similar_vk = replace_0(similar_vk)
+    # similar_mk = replace_0(similar_mk)
+
+    axs[0].plot(list(similar_mk.keys()), list(math.log(len(x),1.1) for x in similar_mk.values()))
+    axs[0].set_title("meduza~kommersant")
+    axs[1].plot(list(similar_vk.keys()), list(math.log(len(x),1.1)  for x in similar_vk.values()))
+    axs[1].set_title("vedomosti~kommersant")
+    axs[2].plot(list(similar_vm.keys()), list(math.log(len(x),1.1)  for x in similar_vm.values()))
+    axs[2].set_title("vedomosti~meduza")
+
+    # Filter all the redundant labels
+    plt.xticks(list(similar_vk.keys())[::7])
+
+    # And finally, we place the labels back
+    plt.tick_params(labelbottom=True)
+    plt.xticks(rotation=30, fontsize=8)
+    plt.tick_params(labelbottom=True)
+
+def make_plot_on_one(similar_vm, similar_vk, similar_mk):
+    # fig, axs = plt.subplots(3, 1, sharex=True)
+
+    # similar_vm = replace_0(similar_vm)
+    # similar_vk = replace_0(similar_vk)
+    # similar_mk = replace_0(similar_mk)
+
+    plt.plot(list(similar_mk.keys()), list(len(x) for x in similar_mk.values()))
+    # set_title("meduza~kommersant")
+    plt.plot(list(similar_vk.keys()), list(len(x)  for x in similar_vk.values()))
+    # axs[1].set_title("vedomosti~kommersant")
+    plt.plot(list(similar_vm.keys()), list(len(x) for x in similar_vm.values()))
+    # axs[2].set_title("vedomosti~meduza")
+
+    # Filter all the redundant labels
+    plt.xticks(list(similar_vk.keys())[::7])
+    plt.yscale('log')
+    # And finally, we place the labels back
+    plt.tick_params(labelbottom=True)
+    plt.xticks(rotation=30, fontsize=8)
+    plt.tick_params(labelbottom=True)
