@@ -60,48 +60,6 @@ def artice_to_vector(tagged_articles, w2v_model, dates, file):
     return vectors
 
 
-
-tagged_m = add_tags_to_articles(articles_m, TAGGED_MEDUZA)
-tagged_v = add_tags_to_articles(articles_v, TAGGED_VEDOMOSTI)
-tagged_k2 = add_tags_to_articles(articles_k, TAGGED_KOMMERSANT)
-
-
-
-with open("analyze_articles/tagged_meduza.txt", "w") as outfile:
-    json.dump(tagged_m, outfile)
-
-with open("analyze_articles/tagged_vedomosti.txt") as json_file:
-    tagged_v = json.load(json_file)
-with open("analyze_articles/tagged_kommersant_full.txt") as json_file:
-    tagged_k = json.load(json_file)
-with open("analyze_articles/tagged_meduza.txt") as json_file:
-    tagged_m = json.load(json_file)
-
-
-vectors_m = artice_to_vector(tagged_m, w2v_model)
-vectors_v = artice_to_vector(tagged_v, w2v_model)
-vectors_k = artice_to_vector(tagged_k, w2v_model)
-
-
-write_to_file(VECTORS_MEDUZA, vectors_m)
-write_to_file(VECTORS_VEDOMOSTI, vectors_v)
-write_to_file(VECTORS_KOMMERSANT, vectors_k)
-
-
-with open(VECTORS_MEDUZA) as json_file:
-    vectors_m = json.load(json_file)
-with open(VECTORS_VEDOMOSTI) as json_file:
-    vectors_v = json.load(json_file)
-with open(VECTORS_KOMMERSANT) as json_file:
-    vectors_k = json.load(json_file)
-
-similar_vm = compare_pairs(vectors_v, vectors_m)
-similar_vk = compare_pairs(vectors_v, vectors_k)
-similar_mk = compare_pairs(vectors_m, vectors_k)
-
-
-import matplotlib.pyplot as plt
-
 def similar_pairs_percentage(pairs, vectors1, vectors2):
     num_of_pairs = []
     for day in pairs:
