@@ -66,8 +66,9 @@ def merge_articles_data(dict1, dict2):
         if key in dict1: result[key] += dict1[key]
         if key in dict2: result[key] += dict2[key]
 
-    # TODO: delete ASAP
-    temp = {}
-    for x in sorted(result.keys()):
-        temp[x] = result[x]
-    return temp
+    return result
+    # # TODO: delete ASAP
+    # temp = {}
+    # for x in sorted(result.keys()):
+    #     temp[x] = result[x]
+    # return temp
