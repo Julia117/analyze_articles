@@ -68,7 +68,7 @@ def get_links_for_date_vedomosti(date_raw):
     html_soup = BeautifulSoup(html_content, "lxml")
 
     for c in html_soup.find_all('script'):
-        if (c.get('defer') == None) & (c.get('async') == None):
+        if (c.get('defer') is None) & (c.get('async') is None):
             data = c.contents[0]
 
             l = data.find('documents')

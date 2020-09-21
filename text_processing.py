@@ -1,3 +1,9 @@
+from ufal.udpipe import Model, Pipeline
+import os
+import sys
+import wget
+
+
 def clean_token(token, misc):
     """
     :param token:

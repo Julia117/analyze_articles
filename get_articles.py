@@ -64,7 +64,7 @@ def get_articles_for_period(links, file, date_raw_list):
                 articles[date] = texts
     # in case of failure processed data will be saved
     finally:
-        print(list(articles.keys())[len(articles.keys())-1])
+        # print(list(articles.keys())[len(articles.keys())-1])
         file_handling.add_to_file(file, articles)
 
 
