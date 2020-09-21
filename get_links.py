@@ -12,6 +12,25 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def get_links_for_date_kommersant(date_raw):
+    """
+    Get all articles links for one date
+
+    Parameters
+    ----------
+    date_raw : date in datetime.date("%Y/%m/%d") format
+
+    Returns
+    -------
+    links
+        A list with links
+
+    Notes
+    -----
+    A kommersant archive page needs to be dynamically loaded. We use
+    PhantomJS to press "Show more" ("Показать еще") button and wait
+    for a page to fully load.
+
+    """
     url = "https://www.kommersant.ru/archive/list/77/" + date_raw.strftime("%Y-%m-%d")
     driver = webdriver.PhantomJS("/Users/yulialysenko/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs")
     driver.get(url)
@@ -38,6 +57,12 @@ def get_links_for_date_kommersant(date_raw):
 
 
 def get_links_for_date_vedomosti(date_raw):
+    """
+    Notes
+    -----
+    For vedomosti archive page we retrieve urls from an html code.
+
+    """
     url = "https://www.vedomosti.ru/archive/" + date_raw.strftime("%Y/%m/%d")
     html_content = requests.get(url).text
     html_soup = BeautifulSoup(html_content, "lxml")
@@ -62,9 +87,25 @@ def get_links_for_date_vedomosti(date_raw):
             return urls
 
 
-#all articles for given period
-def get_links_for_period(date_raw_list, links_for_date_func): ###links_for_date_func = vedomosti/kommersant
-    links= {}
+def get_links_for_period(date_raw_list, links_for_date_func):
+    """
+    Get all articles links for a period of time for kommersant or vedomosti
+
+    Parameters
+    ----------
+    date_raw_list : list of dates for which we want to download articles
+                    dates in datetime.date("%Y/%m/%d") format
+
+    links_for_date_func : a function to use for downloading links
+                            for one date (kommersant or vedomosti)
+    Returns
+    -------
+    links
+        A dictionary in format {date : list of links}
+
+    """
+
+    links = {}
     for date in date_raw_list:
         print(date.strftime("%Y/%m/%d"))
         urls = links_for_date_func(date)
@@ -72,7 +113,29 @@ def get_links_for_period(date_raw_list, links_for_date_func): ###links_for_date_
         # date_raw_start += datetime.timedelta(days=1)
     return links
 
+
 def get_links_for_period_meduza(date_raw_list):
+    """
+    Get all meduza articles links for a period of time
+
+    Parameters
+    ----------
+    date_raw_list : list of dates for which we want to download articles
+                    dates in datetime.date("%Y/%m/%d") format
+
+    Returns
+    -------
+    links
+        A dictionary in format {date : list of links}
+
+    Notes
+    -----
+    Meduza provides an API for retrieving links. We load archive data
+    starting with up-to-date news and 100 articles info per page.
+    We stop when the oldest date in the date_raw_list is reached.
+
+    """
+
     links = {}
     date_is_reached = False
     i = 0

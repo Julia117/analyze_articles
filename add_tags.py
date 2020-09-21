@@ -4,8 +4,23 @@ import numpy as np
 from datetime import datetime
 
 
-
 def add_tags_to_articles(articles, file, dates):
+    """
+    Add part-of-speech tags to articles in format word_part-of-speech
+
+    Parameters
+    ----------
+    articles : all articles for time period in format {date : [articles]}
+
+    file : filename to read articles from
+
+    dates : a list of dates to use articles for, dates in datetime.date("%Y/%m/%d") format
+
+    Returns
+    -------
+    tagged_articles
+        Dictionary of articles with tags in format {date : [tagged articles]}
+    """
     tagged_articles = {}
     try:
         for date in articles:
@@ -17,7 +32,27 @@ def add_tags_to_articles(articles, file, dates):
     return tagged_articles
 
 
-def get_result_vector(tagged_article, w2v_model):
+def text_to_vector(tagged_article, w2v_model):
+    """
+    Get vector for an article using word2vec model
+
+    Parameters
+    ----------
+    tagged_article : article text with added part-of-speech tags
+
+    w2v_model : word to vector model trained for Russian language.
+                Info available at https://rusvectores.org/en/about/
+
+    Returns
+    -------
+    A list of 300 float numbers
+
+    Notes
+    -----
+    To calculate a vector for a text we get vectors for all the words
+    in the text, sum them and divide by the length of the sum vector.
+
+    """
     result = []
     for word in tagged_article:
         try:
@@ -28,6 +63,33 @@ def get_result_vector(tagged_article, w2v_model):
 
 
 def article_to_vector(tagged_articles, w2v_model, dates, file):
+    """
+    Get vector for an article using word2vec model
+
+    Parameters
+    ----------
+    tagged_articles : a list of articles texts with added part-of-speech tags
+
+    w2v_model : word to vector model trained for Russian language.
+                Info available at https://rusvectores.org/en/about/
+
+    file : filename to save vectors to
+
+    dates : list of dates for which we want to get vectors
+            dates in datetime.date("%Y/%m/%d") format
+
+    Returns
+    -------
+    vectors
+        A dictionary of vectors in {date : [vectors]} format
+
+    Notes
+    -----
+    To calculate a vector for a text we get vectors for all the words
+    in the text, sum them and divide by the length of the sum vector.
+
+    """
+
     vectors = {}
     try:
         for date in tagged_articles:

@@ -10,7 +10,29 @@ def get_text(url):
     return article.text
 
 
-def get_articles_for_period(all_links, file, date_raw_list):
+def get_articles_for_period(links, file, date_raw_list):
+    """
+    Get all articles for a period of time
+
+    Parameters
+    ----------
+    links : list of all links for a time period in format {date : [links]}
+
+    file : filename to save articles to
+
+    date_raw_list : list of dates for which we want to download articles
+                    dates in datetime.date("%Y/%m/%d") format
+
+    Returns
+    -------
+    Saves articles to file
+
+    Notes
+    -----
+    Date is saved to file so that we could import it later instead of
+    downloading it. Downloading articles can take too long.
+
+    """
     articles = {}
     try:
         for date in all_links:

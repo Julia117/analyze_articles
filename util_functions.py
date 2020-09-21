@@ -4,6 +4,18 @@ from datetime import datetime
 
 
 def date_range(date1, date2):
+    """
+        Get dates list from date1 to date2
+
+        Parameters
+        ----------
+        date1, date2 : dates in datetime.date("%Y/%m/%d") format
+
+        Returns
+        -------
+        result
+            A list of dates
+    """
     result = []
     while date1 <= date2:
         result.append(date1)
@@ -12,11 +24,39 @@ def date_range(date1, date2):
 
 
 def get_missing_dates(start_date, end_date, file):
+    """
+    Get missing dates list between start_date and end_date in file
+
+    Parameters
+    ----------
+    start_date, end_date : dates in datetime.date("%Y/%m/%d") format
+
+    file : filename to check the date in
+
+    Returns
+    -------
+    result
+        A list of dates
+
+    """
     data = file_handling.read_from_file(file)
     return list(set(date_range(start_date, end_date)) - set([datetime.strptime(date, "%Y/%m/%d").date() for date in data.keys()]))
 
 
 def merge_articles_data(dict1, dict2):
+    """
+    Merge to dictionaries into one
+
+    Parameters
+    ----------
+    dict1, dict2 : dictionaries to be merged
+
+    Returns
+    -------
+    result
+        Dictionary that contains data from dict1 and dict2
+
+    """
     result = {}
     if not dict1:
         return dict2
