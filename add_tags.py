@@ -25,7 +25,7 @@ def add_tags_to_articles(articles, file, dates):
     try:
         for date in articles:
             if datetime.strptime(date, "%Y/%m/%d").date() in dates:
-                print(date)
+                print("Tags added for ", date)
                 tagged_articles[date] = [text_processing.add_tags(text=text) for text in articles[date]]
     # in case of failure processed data will be saved
     finally:
@@ -91,7 +91,7 @@ def article_to_vector(tagged_articles, w2v_model, dates, file):
     try:
         for date in tagged_articles:
             if datetime.strptime(date, "%Y/%m/%d").date() in dates:
-                print(date)
+                print("Vectors calculated for ", date)
                 vectors[date] = [text_to_vector(article, w2v_model) for article in tagged_articles[date]]
     # in case of failure processed data will be saved
     finally:

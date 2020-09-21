@@ -107,7 +107,7 @@ def get_links_for_period(date_raw_list, links_for_date_func):
 
     links = {}
     for date in date_raw_list:
-        print(date.strftime("%Y/%m/%d"))
+        print("Links downloaded for ", date.strftime("%Y/%m/%d"))
         urls = links_for_date_func(date)
         links[date.strftime("%Y/%m/%d")] = urls
     return links
