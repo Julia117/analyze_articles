@@ -8,7 +8,7 @@ def write_to_file(filename, new):
 
     Parameters
     ----------
-    filename : file to write to
+    filename : name of the file to write to
     new : new JSON data to write to file
 
     """
@@ -22,7 +22,7 @@ def read_from_file(filename):
 
     Parameters
     ----------
-    filename : file to write from
+    filename : name of the file to read from
 
     Returns
     -------
@@ -40,7 +40,7 @@ def add_to_file(filename, input):
 
     Parameters
     ----------
-    filename : file to write from
+    filename : name of the file to write to
 
     input : new JSON data
 
