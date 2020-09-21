@@ -110,7 +110,6 @@ def get_links_for_period(date_raw_list, links_for_date_func):
         print(date.strftime("%Y/%m/%d"))
         urls = links_for_date_func(date)
         links[date.strftime("%Y/%m/%d")] = urls
-        # date_raw_start += datetime.timedelta(days=1)
     return links
 
 
