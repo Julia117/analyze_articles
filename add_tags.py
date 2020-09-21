@@ -95,7 +95,7 @@ def article_to_vector(tagged_articles, w2v_model, dates, file):
         for date in tagged_articles:
             if datetime.strptime(date, "%Y/%m/%d").date() in dates:
                 print(date)
-                vectors[date] = [get_result_vector(article, w2v_model) for article in tagged_articles[date]]
+                vectors[date] = [text_to_vector(article, w2v_model) for article in tagged_articles[date]]
     finally:
         file_handling.add_to_file(file, vectors)
     return vectors

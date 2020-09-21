@@ -35,12 +35,12 @@ def get_articles_for_period(links, file, date_raw_list):
     """
     articles = {}
     try:
-        for date in all_links:
+        for date in links:
             if datetime.strptime(date, "%Y/%m/%d").date() in date_raw_list:
                 print(date)
                 texts = []
 
-                for link in all_links[date]:
+                for link in links[date]:
                     try:
                         text = get_text(link)
                     except:
