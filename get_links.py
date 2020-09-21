@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def get_links_for_date_kommersant(date_raw):
     """
-    Get all articles links for one date
+    Get all articles links for one date from kommersant
 
     Parameters
     ----------
@@ -60,7 +60,7 @@ def get_links_for_date_vedomosti(date_raw):
     """
     Notes
     -----
-    For vedomosti archive page we retrieve urls from an html code.
+    For vedomosti archive page we retrieve urls from an html page.
 
     """
     url = "https://www.vedomosti.ru/archive/" + date_raw.strftime("%Y/%m/%d")

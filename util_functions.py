@@ -5,16 +5,17 @@ from datetime import datetime
 
 def date_range(date1, date2):
     """
-        Get dates list from date1 to date2
+    Generates a date range from date1 to date2
 
-        Parameters
-        ----------
-        date1, date2 : dates in datetime.date("%Y/%m/%d") format
+    Parameters
+    ----------
+    date1, date2 : dates in datetime.date("%Y/%m/%d") format
 
-        Returns
-        -------
-        result
-            A list of dates
+    Returns
+    -------
+    result
+        A list of dates
+
     """
     result = []
     while date1 <= date2:
@@ -25,13 +26,13 @@ def date_range(date1, date2):
 
 def get_missing_dates(start_date, end_date, file):
     """
-    Get missing dates list between start_date and end_date in file
+    Get list of missing dates between start_date and end_date in file
 
     Parameters
     ----------
     start_date, end_date : dates in datetime.date("%Y/%m/%d") format
 
-    file : filename to check the date in
+    file : name of the file to check the date in
 
     Returns
     -------
@@ -45,7 +46,7 @@ def get_missing_dates(start_date, end_date, file):
 
 def merge_articles_data(dict1, dict2):
     """
-    Merge to dictionaries into one
+    Merge two dictionaries into one
 
     Parameters
     ----------

@@ -29,10 +29,13 @@ def clean_lemma(lemma, pos, lowercase=True):
                 or out_lemma.endswith('.'):
             out_lemma = ''.join(out_lemma[:-1])
     return out_lemma
+
+
 def num_replace(word):
     newtoken = 'x' * len(word)
     nw = newtoken + '_NUM'
     return nw
+
 
 def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
     entities = {'PROPN'}
@@ -42,13 +45,13 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
     mem_number = None
     tagged_propn = []
 
-    # обрабатываем текст, получаем результат в формате conllu:
+    # Process text, get the result in format conllu:
     processed = pipeline.process(text)
 
-    # пропускаем строки со служебной информацией:
+    # skip lines with service information:
     content = [l for l in processed.split('\n') if not l.startswith('#')]
 
-    # извлекаем из обработанного текста леммы, тэги и морфологические характеристики
+    # retrieve lemmas, tags and morphological characteristics from text
     tagged = [w.split('\t') for w in content if w]
 
     for t in tagged:
@@ -102,10 +105,6 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
         tagged_propn = [word.split('_')[0] for word in tagged_propn]
     return tagged_propn
 
-from ufal.udpipe import Model, Pipeline
-import os
-import sys
-import wget
 
 def add_tags(text='Текст нужно передать функции в виде строки!', modelfile='udpipe_syntagrus.model'):
     udpipe_model_url = 'https://rusvectores.org/static/models/udpipe_syntagrus.model'
@@ -123,5 +122,5 @@ def add_tags(text='Текст нужно передать функции в ви
     output = process(process_pipeline, text=text)
 
     # print(' '.join(output))
-    # line = unify_sym(line.strip()) # здесь могла бы быть ваша функция очистки текста
+    # line = unify_sym(line.strip()) # place for a function to clean text
     return output

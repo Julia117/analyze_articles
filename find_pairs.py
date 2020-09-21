@@ -25,7 +25,7 @@ def vectors_similarity(v1, v2):
 
 def compare_pairs(paper1, paper2):
     """
-    Make pairwise comparison between articles from two papers
+    Make pairwise comparison between articles from two newspapers
 
     Parameters
     ----------
@@ -34,8 +34,8 @@ def compare_pairs(paper1, paper2):
     Returns
     -------
     similar_articles
-            A dictionary in format {date : [similar_articles]} where similar
-            articles are pairs with vector similarity > 0.92
+            A dictionary in format {date : [similar_articles]} where
+            similar_articles are pairs with vector similarity > 0.92
 
     """
     similar_articles = {}

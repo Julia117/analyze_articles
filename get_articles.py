@@ -4,6 +4,19 @@ from datetime import datetime
 
 
 def get_text(url):
+    """
+    Get article text
+
+    Parameters
+    ----------
+    url : link to download text from
+
+    Returns
+    -------
+    Article text as string
+
+    """
+
     article = Article(url)
     article.download()
     article.parse()
@@ -18,7 +31,7 @@ def get_articles_for_period(links, file, date_raw_list):
     ----------
     links : list of all links for a time period in format {date : [links]}
 
-    file : filename to save articles to
+    file : name og the file to save articles to
 
     date_raw_list : list of dates for which we want to download articles
                     dates in datetime.date("%Y/%m/%d") format
@@ -49,7 +62,7 @@ def get_articles_for_period(links, file, date_raw_list):
                         texts.append(text)
 
                 articles[date] = texts
-
+    # in case of failure processed data will be saved
     finally:
         print(list(articles.keys())[len(articles.keys())-1])
         file_handling.add_to_file(file, articles)
