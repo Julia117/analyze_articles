@@ -3,6 +3,24 @@ import matplotlib.pyplot as plt
 
 
 def make_plot(similar_vk, similar_vm, similar_mk):
+    """
+    Draw 3 subplots with number of pairs of similar articles
+    between each pair of newspapers
+
+    Parameters
+    ----------
+    similar_vk, similar_mk, similar_vm : similar_x is a dictionary
+                in format {date : [similar_articles]} where similar_articles
+                are pairs with vector similarity > 0.92. V stands for vedomosti,
+                k stands for kommersant and m stands for meduza.
+
+    Returns
+    -------
+    Draws 3 subplots with dates on shared x-axis and number of similar pairs
+    between two newspapers on y-axis.
+
+    """
+
     fig, axs = plt.subplots(3, 1, sharex=True)
 
     axs[0].plot(list(similar_mk.keys()), list(len(x) for x in similar_mk.values()))
@@ -24,7 +42,31 @@ def make_plot(similar_vk, similar_vm, similar_mk):
     # plt.axvline(x='2020/08/09', color='r', linewidth=0.5)
     # plt.axvline(x='2020/07/07', color='r', linewidth=0.5)
 
+
 def make_plot_trend(similar_vk, similar_vm, similar_mk):
+    """
+    Draw 3 subplots with trend of number of pairs of similar articles
+    between each pair of newspapers
+
+    Parameters
+    ----------
+    similar_vk, similar_mk, similar_vm : similar_x is a dictionary
+                in format {date : [similar_articles]} where similar_articles
+                are pairs with vector similarity > 0.92. V stands for vedomosti,
+                k stands for kommersant and m stands for meduza.
+
+    Returns
+    -------
+    Draws 3 subplots with dates on shared x-axis and trend of number of similar pairs
+    between two newspapers on y-axis.
+
+    Notes
+    -----
+    Trends are calculated via convolution using backward displaced moving
+    weighted average.
+
+    """
+
     fig, axs = plt.subplots(3, 1, sharex=True)
 
     decomposition_mk = seasonal_decompose(list(len(x) for x in similar_mk.values()), two_sided=False, period=7)
