@@ -1,5 +1,5 @@
-from analyze_articles import text_processing
-from analyze_articles import file_handling
+from utility_functions import file_handling
+from tag_articles import text_processing
 import numpy as np
 from datetime import datetime
 

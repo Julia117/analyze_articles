@@ -1,4 +1,4 @@
-from analyze_articles import file_handling
+from utility_functions import file_handling
 from datetime import timedelta
 from datetime import datetime
 

@@ -1,4 +1,4 @@
-from analyze_articles import util_functions
+from utility_functions import util_functions
 import json
 
 

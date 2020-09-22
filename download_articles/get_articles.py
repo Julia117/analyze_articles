@@ -1,4 +1,4 @@
-from analyze_articles import file_handling
+from utility_functions import file_handling
 from newspaper import Article
 from datetime import datetime
 
