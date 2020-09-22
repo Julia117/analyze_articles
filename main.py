@@ -1,4 +1,6 @@
-from analyze_articles import get_articles, plots, get_links, util_functions, add_tags, find_pairs, file_handling
+from analyze_articles import plots, util_functions, file_handling
+from tag_articles import add_tags, find_pairs
+from download_articles import get_articles, get_links
 import gensim.downloader as api
 
 
