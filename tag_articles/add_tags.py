@@ -69,7 +69,7 @@ def article_to_vector(tagged_articles, w2v_model, dates, file):
 
     Parameters
     ----------
-    tagged_articles : a list of articles texts with added part-of-speech tags
+    tagged_articles : a list of articles' texts with added part-of-speech tags
 
     w2v_model : word to vector model trained for Russian language.
                 Info available at https://rusvectores.org/en/about/

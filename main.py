@@ -39,7 +39,7 @@ urls_k = file_handling.read_from_file(URLS_KOMMERSANT)
 urls_v = file_handling.read_from_file(URLS_VEDOMOSTI)
 
 
-# download articles texts
+# download articles' texts
 articles_m = get_articles.get_articles_for_period(urls_m, TEXTS_MEDUZA, period)
 articles_v = get_articles.get_articles_for_period(urls_v, TEXTS_VEDOMOSTI, period)
 articles_k = get_articles.get_articles_for_period(urls_k, TEXTS_KOMMERSANT, period)

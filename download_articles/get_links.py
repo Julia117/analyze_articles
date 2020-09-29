@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def get_links_for_date_kommersant(date_raw):
     """
-    Get all articles links for one date from kommersant
+    Get all articles' links for one date from kommersant
 
     Parameters
     ----------
@@ -89,7 +89,7 @@ def get_links_for_date_vedomosti(date_raw):
 
 def get_links_for_period(date_raw_list, links_for_date_func, file):
     """
-    Get all articles links for a period of time for kommersant or vedomosti
+    Get all articles' links for a period of time for kommersant or vedomosti
 
     Parameters
     ----------
@@ -120,7 +120,7 @@ def get_links_for_period(date_raw_list, links_for_date_func, file):
 
 def get_links_for_period_meduza(date_raw_list, file):
     """
-    Get all meduza articles links for a period of time
+    Get all meduza articles' links for a period of time
 
     Parameters
     ----------

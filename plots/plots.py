@@ -119,7 +119,7 @@ def draw_regression_line_trend(similar_articles, plot):
     m, b = np.polyfit(dates[6:], decomposition.trend[6:], 1)
     # m = slope, b = intercept
 
-    reg_line, = plot.plot(x, m * dates + b, label="scope = " + "{:.3f}".format(m))
+    reg_line, = plot.plot(x, m * dates + b, label="slope = " + "{:.3f}".format(m))
     plot.legend(handles=[reg_line], loc='upper right')
 
 
@@ -149,7 +149,7 @@ def draw_regression_line_scatter(similar_articles, plot):
     m, b = np.polyfit(dates, y, 1)
     # m = slope, b = intercept
 
-    reg_line, = plot.plot(x, m * dates + b, label="scope = " + "{:.3f}".format(m))
+    reg_line, = plot.plot(x, m * dates + b, label="slope = " + "{:.3f}".format(m))
     plot.legend(handles=[reg_line], loc='upper right')
 
 
@@ -168,7 +168,7 @@ def make_plot_regression(similar_vk, similar_vm, similar_mk):
     Returns
     -------
     Draws 3 subplots with dates on shared x-axis, number of similar pairs
-    between two newspapers on y-axis and a regression line. Regression scope is
+    between two newspapers on y-axis and a regression line. Regression slope is
     written in the legend.
 
     """
