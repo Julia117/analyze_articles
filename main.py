@@ -86,8 +86,9 @@ similar_vk = find_pairs.compare_pairs(vectors_v, vectors_k)
 similar_mk = find_pairs.compare_pairs(vectors_m, vectors_k)
 
 
-# draw the plot
-plots.make_plot(vectors_m, vectors_k, vectors_v)
+# draw the plots
+plots.make_plot(similar_vk, similar_vm, similar_mk)
+plots.make_plot_regression(similar_vk, similar_vm, similar_mk)
 
 # close plot
 # plt.close()
