@@ -66,6 +66,6 @@ def get_articles_for_period(links, file, date_raw_list):
     finally:
         # print(list(articles.keys())[len(articles.keys())-1])
         file_handling.add_to_file(file, articles)
-
+    return articles
 
 

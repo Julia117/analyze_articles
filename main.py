@@ -43,9 +43,9 @@ urls_v = file_handling.read_from_file(URLS_VEDOMOSTI)
 
 
 # download articles texts
-get_articles.get_articles_for_period(urls_m, TEXTS_MEDUZA, period)
-get_articles.get_articles_for_period(urls_v, TEXTS_VEDOMOSTI, period)
-get_articles.get_articles_for_period(urls_k, TEXTS_KOMMERSANT, period)
+articles_m = get_articles.get_articles_for_period(urls_m, TEXTS_MEDUZA, period)
+articles_v = get_articles.get_articles_for_period(urls_v, TEXTS_VEDOMOSTI, period)
+articles_k = get_articles.get_articles_for_period(urls_k, TEXTS_KOMMERSANT, period)
 
 ### or read articles from file
 articles_k = file_handling.read_from_file(TEXTS_KOMMERSANT)
@@ -60,9 +60,9 @@ api.info('word2vec-ruscorpora-300')
 w2v_model = api.load("word2vec-ruscorpora-300")
 
 # add tags to texts
-add_tags.add_tags_to_articles(articles_m, TAGGED_MEDUZA, period)
-add_tags.add_tags_to_articles(articles_v, TAGGED_VEDOMOSTI, period)
-add_tags.add_tags_to_articles(articles_k, TAGGED_KOMMERSANT, period)
+tagged_m = add_tags.add_tags_to_articles(articles_m, TAGGED_MEDUZA, period)
+tagged_v = add_tags.add_tags_to_articles(articles_v, TAGGED_VEDOMOSTI, period)
+tagged_k = add_tags.add_tags_to_articles(articles_k, TAGGED_KOMMERSANT, period)
 
 ### or read tagged articles from file
 tagged_m = file_handling.read_from_file(TAGGED_MEDUZA)
