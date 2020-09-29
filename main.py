@@ -28,13 +28,10 @@ period = util_functions.date_range(date_start, date_end)
 # period = util_functions.get_missing_dates(date_start, date_end, VECTORS_KOMMERSANT)
 
 # download links for articles (date: links) and add links to files
-urls_v = get_links.get_links_for_period(period, get_links.get_links_for_date_vedomosti)
-urls_k = get_links.get_links_for_period(period, get_links.get_links_for_date_kommersant)
-urls_m = get_links.get_links_for_period_meduza(period)
+urls_v = get_links.get_links_for_period(period, get_links.get_links_for_date_vedomosti, URLS_VEDOMOSTI)
+urls_k = get_links.get_links_for_period(period, get_links.get_links_for_date_kommersant, URLS_KOMMERSANT)
+urls_m = get_links.get_links_for_period_meduza(period, URLS_MEDUZA)
 
-file_handling.add_to_file(URLS_MEDUZA, urls_m)
-file_handling.add_to_file(URLS_VEDOMOSTI, urls_v)
-file_handling.add_to_file(URLS_KOMMERSANT, urls_k)
 
 ### or read links from file
 urls_m = file_handling.read_from_file(URLS_MEDUZA)

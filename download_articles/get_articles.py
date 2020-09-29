@@ -31,7 +31,7 @@ def get_articles_for_period(links, file, date_raw_list):
     ----------
     links : list of all links for a time period in format {date : [links]}
 
-    file : name og the file to save articles to
+    file : name of the file to save articles to
 
     date_raw_list : list of dates for which we want to download articles
                     dates in datetime.date("%Y/%m/%d") format

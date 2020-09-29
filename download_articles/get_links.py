@@ -1,5 +1,5 @@
 from utility_functions import util_functions
-
+from utility_functions import file_handling
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -87,7 +87,7 @@ def get_links_for_date_vedomosti(date_raw):
             return urls
 
 
-def get_links_for_period(date_raw_list, links_for_date_func):
+def get_links_for_period(date_raw_list, links_for_date_func, file):
     """
     Get all articles links for a period of time for kommersant or vedomosti
 
@@ -98,22 +98,27 @@ def get_links_for_period(date_raw_list, links_for_date_func):
 
     links_for_date_func : a function to use for downloading links
                             for one date (kommersant or vedomosti)
+
+    file : name of the file to save articles to
+
     Returns
     -------
     links
         A dictionary in format {date : list of links}
 
     """
-
     links = {}
-    for date in date_raw_list:
-        print("Links downloaded for ", date.strftime("%Y/%m/%d"))
-        urls = links_for_date_func(date)
-        links[date.strftime("%Y/%m/%d")] = urls
+    try:
+        for date in date_raw_list:
+            print("Links downloaded for ", date.strftime("%Y/%m/%d"))
+            urls = links_for_date_func(date)
+            links[date.strftime("%Y/%m/%d")] = urls
+    finally:
+        file_handling.add_to_file(file, links)
     return links
 
 
-def get_links_for_period_meduza(date_raw_list):
+def get_links_for_period_meduza(date_raw_list, file):
     """
     Get all meduza articles links for a period of time
 
@@ -121,6 +126,8 @@ def get_links_for_period_meduza(date_raw_list):
     ----------
     date_raw_list : list of dates for which we want to download articles
                     dates in datetime.date("%Y/%m/%d") format
+
+    file : name of the file to save articles to
 
     Returns
     -------
@@ -134,32 +141,34 @@ def get_links_for_period_meduza(date_raw_list):
     We stop when the oldest date in the date_raw_list is reached.
 
     """
-
     links = {}
-    date_is_reached = False
-    i = 0
+    try:
+        date_is_reached = False
+        i = 0
 
-    while not date_is_reached:
-        url = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=" + str(i) + "&per_page=100"
-        response = requests.get(url)
-        json_data = response.json()
-        info = json_data['documents']
-        articles = {}
+        while not date_is_reached:
+            url = "https://meduza.io/api/v3/search?chrono=news&locale=ru&page=" + str(i) + "&per_page=100"
+            response = requests.get(url)
+            json_data = response.json()
+            info = json_data['documents']
+            articles = {}
 
-        for item in info:
-            item = info[item]
-            date = item['pub_date'].replace('-', '/')
-            articles.setdefault(date, [])
-            date_raw = datetime.strptime(date, "%Y/%m/%d").date()
-            if date_raw >= min(date_raw_list):
-                if date_raw <= max(date_raw_list) and date_raw in date_raw_list:
-                    articles[date].append("https://meduza.io/" + item['url'])
+            for item in info:
+                item = info[item]
+                date = item['pub_date'].replace('-', '/')
+                articles.setdefault(date, [])
+                date_raw = datetime.strptime(date, "%Y/%m/%d").date()
+                if date_raw >= min(date_raw_list):
+                    if date_raw <= max(date_raw_list) and date_raw in date_raw_list:
+                        articles[date].append("https://meduza.io/" + item['url'])
+                    else:
+                        articles.pop(date)
                 else:
                     articles.pop(date)
-            else:
-                articles.pop(date)
-                date_is_reached = True
+                    date_is_reached = True
 
-        links = util_functions.merge_dicts(links, articles)
-        i = i + 1
+            links = util_functions.merge_dicts(links, articles)
+            i = i + 1
+    finally:
+        file_handling.add_to_file(file, links)
     return links
