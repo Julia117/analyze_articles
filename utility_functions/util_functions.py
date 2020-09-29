@@ -69,3 +69,26 @@ def merge_dicts(dict1, dict2):
 
     return result
 
+
+def sort_dict(dictionary):
+    """
+    This function sorts a dictionary.
+
+    Parameters
+    ----------
+    dictionary : dictionary to sort
+
+    Returns
+    -------
+    result
+        Sorted dictionary
+
+    Notes
+    -----
+    To show dates on a plot we need to sort them first.
+
+    """
+    result = {}
+    for x in sorted(dictionary.keys()):
+        result[x] = dictionary[x]
+    return result

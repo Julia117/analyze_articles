@@ -1,3 +1,4 @@
+from utility_functions import util_functions
 import numpy as np
 
 
@@ -49,4 +50,5 @@ def compare_pairs(paper1, paper2):
                     similar_articles[date].append([i, j])
                 j += 1
             i += 1
+    similar_articles = util_functions.sort_dict(similar_articles)
     return similar_articles
