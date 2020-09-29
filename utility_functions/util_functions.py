@@ -44,7 +44,7 @@ def get_missing_dates(start_date, end_date, file):
     return list(set(date_range(start_date, end_date)) - set([datetime.strptime(date, "%Y/%m/%d").date() for date in data.keys()]))
 
 
-def merge_articles_data(dict1, dict2):
+def merge_dicts(dict1, dict2):
     """
     Merge two dictionaries into one
 

@@ -53,5 +53,5 @@ def add_to_file(filename, input):
     old = {}
     if filename:
         old = read_from_file(filename)
-    new = util_functions.merge_articles_data(old, input)
+    new = util_functions.merge_dicts(old, input)
     write_to_file(filename, new)

@@ -160,6 +160,6 @@ def get_links_for_period_meduza(date_raw_list):
                 articles.pop(date)
                 date_is_reached = True
 
-        links = util_functions.merge_articles_data(links, articles)
+        links = util_functions.merge_dicts(links, articles)
         i = i + 1
     return links
