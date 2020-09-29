@@ -3,7 +3,7 @@ import os
 import sys
 import wget
 
-
+# These functions for text processing are taken from https://github.com/akutuzov/webvectors
 def clean_token(token, misc):
     """
     :param token:
@@ -14,6 +14,7 @@ def clean_token(token, misc):
     if token == 'Файл' and 'SpaceAfter=No' in misc:
         return None
     return out_token
+
 
 def clean_lemma(lemma, pos, lowercase=True):
     """
@@ -114,7 +115,7 @@ def process(pipeline, text='Строка', keep_pos=True, keep_punct=False):
 
 def add_tags(text='Текст нужно передать функции в виде строки!', modelfile='udpipe_syntagrus.model'):
     udpipe_model_url = 'https://rusvectores.org/static/models/udpipe_syntagrus.model'
-    udpipe_filename = udpipe_model_url.split('/')[-1]
+    # udpipe_filename = udpipe_model_url.split('/')[-1]
 
     if not os.path.isfile(modelfile):
         print('UDPipe model not found. Downloading...', file=sys.stderr)
